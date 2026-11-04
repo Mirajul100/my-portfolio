@@ -113,15 +113,15 @@
   /* ============ 6. PROJECTS (API with fallback) ============ */
   var FALLBACK = [
     {
-      title: "VideoMind",
+      title: "Lumen Ai",
       flow: ["URL", "transcribe", "analyze", "UI"],
       description:
-        "AI-powered YouTube video analysis. Paste a link, get structured insight without watching the whole video.",
-      stack: ["Python", "FastAPI", "ML", "React"],
+        "AI-powered YouTube video and document analysis. Paste a link, get structured insight without watching the whole video.",
+      stack: ["Python", "FastAPI", "Hugging Face", "Gemini"],
       metric_label: "status",
       metric: "in development",
-      link: "",
-      image: "img/video-mind.svg",
+      link: "https://github.com/Mirajul100/Ai-video-assistant",
+      image: "img/lumen_ai.png",
     },
   ];
 
@@ -158,7 +158,9 @@
         " ↗</a>"
       : title;
     return (
-      '<article class="card">' +
+      '<article class="card' +
+      (image ? " has-image" : "") +
+      '">' +
       (image
         ? '<div class="card-image"><img src="' +
           esc(image) +
@@ -166,6 +168,7 @@
           title +
           ' preview illustration" loading="lazy"><span>Project preview</span></div>'
         : "") +
+      '<div class="card-content">' +
       '<div class="flow">' +
       p.flow
         .map(function (f) {
@@ -191,6 +194,7 @@
       "</span><em>" +
       esc(p.metric) +
       "</em></div>" +
+      "</div>" +
       "</article>"
     );
   }
