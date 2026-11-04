@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mirajul — Python, ML &amp; product engineering</title>
+<meta name="description" content="Python developer building AI-powered apps: ML integration, FastAPI backends and rich frontends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="rail"></div>
+<div class="glow" id="glow"></div>
+
+<!-- ============ 1. HEADER / NAV ============ -->
+<header>
+  <nav id="nav" aria-label="Sections">
+    <a href="#top" class="on">00 input</a>
+    <a href="#about">01 process</a>
+    <a href="#stack">02 layers</a>
+    <a href="#work">03 output</a>
+    <a href="#contact">04 deploy</a>
+  </nav>
+  <div class="tools">
+    <a class="resume" href="files/cv.pdf" download="Mirajul-CV.pdf">CV <span aria-hidden="true">↓</span></a>
+    <button id="pb" type="button">Jump <kbd>⌘K</kbd></button>
+    <button id="tb" type="button" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ 2. HERO ============ -->
+  <section id="top" class="hero">
+    <div class="lbl">Python · ML · Full stack</div>
+    <h1 class="serif">Mirajul</h1>
+    <p class="lead serif">I take models out of notebooks and turn them into products people actually open.</p>
+    <div class="term">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <pre id="t" aria-live="off"></pre>
+    </div>
+  </section>
+
+  <!-- ============ 3. DEVELOPER (PHOTO) ============ -->
+  <section id="me" class="rv">
+    <div class="lbl">Developer</div>
+    <div class="me">
+      <div class="ph">
+        <div class="in2">
+          <b>M</b>
+          <!-- Put your photo at static/img/me.jpg. If missing, the "M" shows. -->
+          <img src="img/me.jpg" alt="Mirajul, developer portrait" onerror="this.remove()">
+        </div>
+        <span style="--a:0deg">Python</span>
+        <span style="--a:90deg">FastAPI</span>
+        <span style="--a:180deg">ML</span>
+        <span style="--a:270deg">React</span>
+      </div>
+      <div>
+        <h2 class="serif">The developer behind the pipelines.</h2>
+        <p>Backend pipelines, model integration and frontend UI, built by one person who cares how all three feel together.</p>
+        <div class="flow mb"><span>Python-first</span><span>FastAPI</span><span>ML integration</span><span>Frontend craft</span></div>
+        <p class="now"><i class="pulse"></i>Currently building VideoMind</p>
+      </div>
+    </div>
+    <div class="mq" aria-hidden="true">
+      <div>
+        <span>PYTHON</span><span>FASTAPI</span><span>MACHINE LEARNING</span><span>REACT</span><span>TYPESCRIPT</span><span>AI APPS</span>
+        <span>PYTHON</span><span>FASTAPI</span><span>MACHINE LEARNING</span><span>REACT</span><span>TYPESCRIPT</span><span>AI APPS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. ABOUT ============ -->
+  <section id="about" class="rv">
+    <div class="lbl">01 — Process</div>
+    <div class="about">
+      <p><b>Developer, mostly Python.</b> I build AI-powered applications end to end: the data pipeline, the FastAPI backend, the model integration, and the interface that makes the output feel obvious.</p>
+      <p>I care about the last 10%. Loading states, animation timing and error messages are part of the product, so I build them with the same care as the model call.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. STACK / LAYERS ============ -->
+  <section id="stack" class="rv">
+    <div class="lbl">02 — Layers</div>
+    <div class="layers">
+      <div class="layer"><small>MODEL</small><span>Python · ML model integration · embeddings · LLM APIs</span></div>
+      <div class="layer"><small>SERVICE</small><span>FastAPI · async pipelines · REST · background jobs</span></div>
+      <div class="layer"><small>INTERFACE</small><span>React · TypeScript · motion-heavy, production-quality UI</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 6. PROJECTS (rendered from /api/projects) ============ -->
+  <section id="work" class="rv">
+    <div class="lbl">03 — Output</div>
+    <div class="grid" id="projects" aria-live="polite"></div>
+  </section>
+
+  <!-- ============ 7. CONTACT ============ -->
+  <section id="contact" class="rv">
+    <div class="lbl">04 — Deploy</div>
+    <div class="big serif">Have something worth building?</div>
+    <div class="contact">
+      <form id="cf" novalidate>
+        <label>Name<input name="name" type="text" required minlength="2" maxlength="80" autocomplete="name"></label>
+        <label>Email<input name="email" type="email" required maxlength="120" autocomplete="email"></label>
+        <label>Message<textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea></label>
+        <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" id="send">Send message</button>
+        <p id="status" role="status"></p>
+      </form>
+      <div class="links">
+        <a href="https://github.com/">GitHub ↗</a>
+        <a href="https://linkedin.com/">LinkedIn ↗</a>
+        <a href="mailto:you@example.com">you@example.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. FOOTER ============ -->
+  <footer>© 2026 Mirajul · Press ⌘K / Ctrl+K to jump anywhere.</footer>
+</main>
+
+<!-- ============ 9. COMMAND PALETTE ============ -->
+<div id="pal" role="dialog" aria-label="Jump to section">
+  <div>
+    <input id="pi" placeholder="Jump to…" autocomplete="off">
+    <ul id="pl"></ul>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

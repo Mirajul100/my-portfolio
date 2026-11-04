@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="30" y1="20" x2="930" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#29231e"/>
+      <stop offset="1" stop-color="#111715"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="120" y1="100" x2="840" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff9a61"/>
+      <stop offset="1" stop-color="#e8480c"/>
+    </linearGradient>
+    <filter id="shadow" x="125" y="69" width="710" height="414" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h960v540H0z"/>
+  <circle cx="783" cy="84" r="177" fill="#e8480c" fill-opacity=".09"/>
+  <circle cx="118" cy="504" r="188" fill="#f3a56f" fill-opacity=".06"/>
+  <path stroke="#fff" stroke-opacity=".07" d="M0 90h960M0 180h960M0 270h960M0 360h960M0 450h960M96 0v540M192 0v540M288 0v540M384 0v540M480 0v540M576 0v540M672 0v540M768 0v540M864 0v540"/>
+  <rect x="161" y="96" width="638" height="345" rx="18" fill="#070908" fill-opacity=".65" filter="url(#shadow)"/>
+  <rect x="151" y="82" width="658" height="366" rx="16" fill="#171a17" stroke="#fff" stroke-opacity=".16"/>
+  <path fill="#20231f" d="M167 98h626v40H167z"/>
+  <circle cx="185" cy="118" r="4" fill="#e8480c"/>
+  <circle cx="201" cy="118" r="4" fill="#f3a56f" fill-opacity=".6"/>
+  <circle cx="217" cy="118" r="4" fill="#f3a56f" fill-opacity=".3"/>
+  <rect x="190" y="163" width="298" height="168" rx="9" fill="#32251d"/>
+  <path fill="url(#accent)" fill-opacity=".88" d="M190 255c54-21 91-5 138-25 43-18 83-60 160-44v145H190z"/>
+  <path stroke="#ffd0af" stroke-opacity=".8" stroke-width="2" d="m209 280 56-23 51 9 44-27 53 5 54-35 42 2"/>
+  <circle cx="514" cy="182" r="24" fill="#e8480c" fill-opacity=".2"/>
+  <path fill="#ffb182" d="m507 170 18 12-18 12z"/>
+  <rect x="510" y="164" width="264" height="11" rx="5.5" fill="#f4f1ea" fill-opacity=".85"/>
+  <rect x="510" y="188" width="178" height="7" rx="3.5" fill="#f4f1ea" fill-opacity=".28"/>
+  <rect x="510" y="211" width="98" height="23" rx="11.5" fill="#e8480c" fill-opacity=".18" stroke="#e8480c" stroke-opacity=".55"/>
+  <path fill="#ff9a61" d="M524 219h6v6h-6z"/>
+  <rect x="536" y="220" width="57" height="4" rx="2" fill="#ffb182"/>
+  <rect x="510" y="251" width="264" height="1" fill="#fff" fill-opacity=".12"/>
+  <rect x="510" y="267" width="117" height="7" rx="3.5" fill="#f4f1ea" fill-opacity=".7"/>
+  <rect x="510" y="283" width="220" height="5" rx="2.5" fill="#f4f1ea" fill-opacity=".19"/>
+  <rect x="510" y="296" width="187" height="5" rx="2.5" fill="#f4f1ea" fill-opacity=".19"/>
+  <rect x="190" y="348" width="584" height="1" fill="#fff" fill-opacity=".13"/>
+  <rect x="190" y="368" width="83" height="7" rx="3.5" fill="#f4f1ea" fill-opacity=".72"/>
+  <rect x="190" y="389" width="560" height="4" rx="2" fill="#fff" fill-opacity=".16"/>
+  <rect x="190" y="389" width="343" height="4" rx="2" fill="url(#accent)"/>
+  <circle cx="533" cy="391" r="7" fill="#ffb182"/>
+  <text x="151" y="494" fill="#f4f1ea" font-family="monospace" font-size="16" letter-spacing="3">VIDEOMIND / INSIGHT ENGINE</text>
+</svg>

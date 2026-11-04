@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="30" y1="30" x2="940" y2="510" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#29221e"/>
+      <stop offset="1" stop-color="#131614"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="262" y1="119" x2="706" y2="413" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7eee1"/>
+      <stop offset="1" stop-color="#d8cbb8"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="437" y1="210" x2="663" y2="374" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f4a16d"/>
+      <stop offset="1" stop-color="#e8480c"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h960v540H0z"/>
+  <circle cx="156" cy="154" r="191" fill="#e8480c" fill-opacity=".08"/>
+  <circle cx="813" cy="440" r="210" fill="#f3a56f" fill-opacity=".06"/>
+  <path stroke="#fff" stroke-opacity=".055" d="M0 90h960M0 180h960M0 270h960M0 360h960M0 450h960M96 0v540M192 0v540M288 0v540M384 0v540M480 0v540M576 0v540M672 0v540M768 0v540M864 0v540"/>
+  <rect x="232" y="77" width="504" height="371" rx="20" fill="#080909" fill-opacity=".45" stroke="#fff" stroke-opacity=".2"/>
+  <rect x="247" y="92" width="474" height="340" rx="12" fill="url(#screen)"/>
+  <path fill="#eee2d1" d="M259 104h450v34H259z"/>
+  <circle cx="277" cy="121" r="4" fill="#e8480c"/>
+  <circle cx="292" cy="121" r="4" fill="#c6a78f"/>
+  <rect x="647" y="117" width="40" height="8" rx="4" fill="#a79581" fill-opacity=".4"/>
+  <rect x="277" y="164" width="172" height="7" rx="3.5" fill="#5a5147" fill-opacity=".33"/>
+  <rect x="277" y="184" width="249" height="25" rx="3" fill="#28231e"/>
+  <rect x="277" y="220" width="187" height="7" rx="3.5" fill="#5a5147" fill-opacity=".28"/>
+  <rect x="277" y="236" width="151" height="7" rx="3.5" fill="#5a5147" fill-opacity=".2"/>
+  <rect x="277" y="269" width="125" height="35" rx="7" fill="#e8480c"/>
+  <rect x="293" y="282" width="61" height="8" rx="4" fill="#fff" fill-opacity=".9"/>
+  <rect x="449" y="161" width="236" height="204" rx="13" fill="url(#tile)"/>
+  <circle cx="568" cy="250" r="61" fill="#fff" fill-opacity=".16" stroke="#fff" stroke-opacity=".58"/>
+  <circle cx="568" cy="250" r="42" stroke="#fff" stroke-opacity=".38" stroke-width="2" stroke-dasharray="5 6"/>
+  <path d="M554 229c4-8 12-12 21-12 13 0 23 10 23 23 0 21-30 45-30 45s-30-24-30-45c0-5 2-9 4-13" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="568" cy="240" r="6" fill="#fff"/>
+  <rect x="478" y="326" width="119" height="7" rx="3.5" fill="#fff" fill-opacity=".86"/>
+  <rect x="510" y="341" width="55" height="5" rx="2.5" fill="#fff" fill-opacity=".52"/>
+  <rect x="277" y="333" width="141" height="5" rx="2.5" fill="#5a5147" fill-opacity=".18"/>
+  <rect x="277" y="349" width="106" height="5" rx="2.5" fill="#5a5147" fill-opacity=".13"/>
+  <path d="M195 183h36m503 94h31M364 465v-17m230 17v-17" stroke="#ff9a61" stroke-opacity=".65" stroke-width="2"/>
+  <circle cx="195" cy="183" r="4" fill="#ff9a61"/>
+  <circle cx="764" cy="277" r="4" fill="#ff9a61"/>
+  <text x="151" y="494" fill="#f4f1ea" font-family="monospace" font-size="16" letter-spacing="3">INTERFACE / MAKE IT FEEL OBVIOUS</text>
+</svg>
