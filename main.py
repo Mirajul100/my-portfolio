@@ -4,6 +4,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -85,6 +86,11 @@ def contact(body: Contact, request: Request):
     with MESSAGES.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record) + "\n")
     return {"ok": True}
+
+
+@app.get("/colored_model.glb", include_in_schema=False)
+def robot_model():
+    return FileResponse(BASE / "colored_model.glb", media_type="model/gltf-binary")
 
 
 # ---------- Static site (must be last) ----------

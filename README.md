@@ -31,6 +31,7 @@ The backend does the following:
 
 - The frontend calls `/api/projects` to render project cards dynamically.
 - The contact form posts to `/api/contact`.
+- The cursor-following robot loads the root `robot.glb` through `/robot.glb`.
 - Contact submissions are rate-limited by IP and stored in a JSON Lines file named `messages.jsonl`.
 
 ## Frontend structure
@@ -39,7 +40,7 @@ The backend does the following:
 This is the main page structure for the portfolio:
 
 - sticky header and navigation
-- hero section with animated terminal style text
+- hero section with animated terminal text and a cursor-following Three.js robot
 - developer profile section
 - process and stack sections
 - projects gallery section
