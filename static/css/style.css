@@ -241,7 +241,7 @@ h1 em {
   max-width: 620px;
   overflow: hidden;
 }
-#robot-canvas {
+#pika-assistant {
   position: fixed;
   top: 0;
   left: 0;
@@ -254,8 +254,36 @@ h1 em {
   transition: opacity 0.2s ease;
   will-change: transform;
 }
-#robot-canvas.is-visible {
+#pika-assistant.is-visible {
   opacity: 1;
+}
+#robot-canvas {
+  display: block;
+  width: 190px;
+  height: 220px;
+}
+#robot-greeting {
+  position: absolute;
+  top: -12px;
+  right: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px 12px 2px 12px;
+  background: var(--card);
+  color: var(--fg);
+  font-size: 12px;
+  line-height: 1.4;
+  width: max-content;
+  max-width: min(280px, 85vw);
+  opacity: 0;
+  transform: translateY(5px) scale(0.95);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+#pika-assistant.is-greeting #robot-greeting {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 .term .bar {
   display: flex;
@@ -916,7 +944,7 @@ footer {
   .glow {
     display: none;
   }
-  #robot-canvas {
+  #pika-assistant {
     display: none;
   }
 }

@@ -88,9 +88,9 @@ def contact(body: Contact, request: Request):
     return {"ok": True}
 
 
-@app.get("/colored_model.glb", include_in_schema=False)
+@app.get("/pika-assistant.gltf", include_in_schema=False)
 def robot_model():
-    return FileResponse(BASE / "colored_model.glb", media_type="model/gltf-binary")
+    return FileResponse(BASE / "pika-assistant.gltf", media_type="model/gltf+json")
 
 
 # ---------- Static site (must be last) ----------

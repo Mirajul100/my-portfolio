@@ -2,10 +2,19 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const canvas = document.querySelector("#robot-canvas");
+const assistant = document.querySelector("#pika-assistant");
+const greeting = document.querySelector("#robot-greeting");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (finePointer.matches) {
+  let firstVisit = true;
+  try {
+    firstVisit = window.localStorage.getItem("pika-assistant-greeted") !== "true";
+  } catch (error) {
+    console.warn("Could not save the Pika greeting preference.", error);
+  }
+
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -34,9 +43,133 @@ if (finePointer.matches) {
     const robot = new THREE.Group();
     scene.add(robot);
 
+    const pointer = new THREE.Vector2();
+    const position = new THREE.Vector2(
+      Math.max(0, window.innerWidth - 214),
+      Math.max(0, window.innerHeight - 244),
+    );
+    const clock = new THREE.Clock();
+    let active = false;
+    let mixer;
+    let idleAction;
+    let greetingAction;
+    let reactionAction;
+    let currentAction;
+    let bubbleTimer;
+    let expressionStart = -Infinity;
+    let leftEyeExpression;
+    let rightEyeExpression;
+    let activeSection = "top";
+
+    assistant.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
+    assistant.classList.add("is-visible");
+
+    function showMessage(message, duration) {
+      window.clearTimeout(bubbleTimer);
+      greeting.textContent = message;
+      assistant.classList.add("is-greeting");
+      bubbleTimer = window.setTimeout(() => {
+        assistant.classList.remove("is-greeting");
+      }, duration);
+    }
+
+    function playAnimation(action) {
+      if (!action || reducedMotion.matches) return;
+      if (currentAction && currentAction !== action) {
+        currentAction.fadeOut(0.15);
+      }
+      action.reset().fadeIn(0.15).play();
+      currentAction = action;
+    }
+
+    function react(message) {
+      showMessage(message, 1900);
+      expressionStart = clock.elapsedTime;
+      playAnimation(reactionAction);
+    }
+
+    function wrapEyeForExpression(model, name) {
+      const eye = model.getObjectByName(name);
+      if (!eye || !eye.parent) return null;
+
+      const wrapper = new THREE.Group();
+      wrapper.position.copy(eye.position);
+      wrapper.quaternion.copy(eye.quaternion);
+      wrapper.scale.copy(eye.scale);
+      wrapper.userData.baseScale = wrapper.scale.clone();
+      eye.parent.add(wrapper);
+      wrapper.add(eye);
+      eye.position.set(0, 0, 0);
+      eye.quaternion.identity();
+      eye.scale.set(1, 1, 1);
+      return wrapper;
+    }
+
+    function updateCuteExpression(elapsed) {
+      if (!leftEyeExpression || !rightEyeExpression) return;
+      const time = elapsed - expressionStart;
+      if (reducedMotion.matches || time < 0 || time > 0.65) {
+        leftEyeExpression.scale.copy(leftEyeExpression.userData.baseScale);
+        rightEyeExpression.scale.copy(rightEyeExpression.userData.baseScale);
+        return;
+      }
+
+      const wink = Math.sin(Math.PI * THREE.MathUtils.clamp(time / 0.42, 0, 1));
+      const sparkle = 1 + 0.12 * Math.sin(Math.PI * THREE.MathUtils.clamp(time / 0.65, 0, 1));
+      leftEyeExpression.scale.copy(leftEyeExpression.userData.baseScale);
+      leftEyeExpression.scale.x *= sparkle;
+      leftEyeExpression.scale.y *= 1 - wink * 0.92;
+      rightEyeExpression.scale.copy(rightEyeExpression.userData.baseScale);
+      rightEyeExpression.scale.x *= sparkle;
+      rightEyeExpression.scale.y *= sparkle;
+    }
+
+    const sectionMessages = {
+      top: "Welcome! Let's explore Mirajul's portfolio together!",
+      me: "Meet Mirajul, the developer behind the work!",
+      about: "Here's how Mirajul builds AI-powered products.",
+      stack: "Python, ML, FastAPI, Ai Engineering and frontend craft!",
+      work: "Project time! Lumen AI turns videos into insights.",
+      contact: "Have an idea? Send Mirajul a message!",
+    };
+    const sections = Array.from(document.querySelectorAll("main section[id]"));
+    let scrollFrame = 0;
+
+    function onSectionScroll() {
+      if (scrollFrame) return;
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = 0;
+        const marker = window.innerHeight * 0.38;
+        let current = sections[0];
+        sections.forEach((section) => {
+          if (section.getBoundingClientRect().top <= marker) current = section;
+        });
+        if (!current || current.id === activeSection) return;
+        activeSection = current.id;
+        react(sectionMessages[activeSection] || "A new section to explore! ✨");
+      });
+    }
+
+    window.addEventListener("scroll", onSectionScroll, { passive: true });
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const control = event.target.closest("a, button, [data-h]");
+      if (!control || control.matches(":disabled")) return;
+      const href = control.getAttribute("href") || "";
+      const target = control.getAttribute("data-h") || "";
+      const sectionId = href.charAt(0) === "#" ? href.slice(1) : target.slice(1);
+      const message = sectionId
+        ? sectionMessages[sectionId] || "Ooh, let's explore!"
+        : "Yay! You picked something! (｡•̀ᴗ-)✧";
+      react(message);
+    });
+
     new GLTFLoader().load(
-      "/colored_model.glb",
+      "/pika-assistant.gltf",
       ({ scene: model, animations }) => {
+        leftEyeExpression = wrapEyeForExpression(model, "LeftEyeGroup");
+        rightEyeExpression = wrapEyeForExpression(model, "RightEyeGroup");
         const bounds = new THREE.Box3().setFromObject(model);
         const size = bounds.getSize(new THREE.Vector3());
         const center = bounds.getCenter(new THREE.Vector3());
@@ -51,34 +184,70 @@ if (finePointer.matches) {
         robot.add(model);
 
         if (animations.length) {
-          const mixer = new THREE.AnimationMixer(model);
-          animations.forEach((clip) => mixer.clipAction(clip).play());
+          mixer = new THREE.AnimationMixer(model);
+          const idleClip = animations.find((clip) => clip.name === "Idle");
+          const greetingClip = animations.find((clip) => clip.name === "Greeting");
+          const reactionClip = animations.find((clip) => clip.name === "Speaking");
+          idleAction = idleClip ? mixer.clipAction(idleClip) : null;
+          greetingAction = greetingClip
+            ? mixer.clipAction(greetingClip)
+            : null;
+          reactionAction = reactionClip
+            ? mixer.clipAction(reactionClip)
+            : null;
+
+          if (reactionAction) {
+            reactionAction.setLoop(THREE.LoopOnce, 1);
+            reactionAction.clampWhenFinished = true;
+          }
+
+          mixer.addEventListener("finished", (event) => {
+            if (event.action === greetingAction && currentAction === greetingAction) {
+              playAnimation(idleAction);
+              showMessage("(｡•̀ᴗ-)✧", 1200);
+              expressionStart = clock.elapsedTime;
+              try {
+                window.localStorage.setItem("pika-assistant-greeted", "true");
+              } catch (error) {
+                console.warn("Could not save the Pika greeting preference.", error);
+              }
+            } else if (
+              event.action === reactionAction &&
+              currentAction === reactionAction
+            ) {
+              playAnimation(idleAction);
+            }
+          });
+
+          if (firstVisit && greetingAction && !reducedMotion.matches) {
+            greetingAction.setLoop(THREE.LoopOnce, 1);
+            greetingAction.clampWhenFinished = true;
+            showMessage("Hi there! 👋", 3200);
+            playAnimation(greetingAction);
+          } else if (idleAction && !reducedMotion.matches) {
+            playAnimation(idleAction);
+          } else if (!reducedMotion.matches) {
+            const fallbackClip = animations.find(
+              (clip) => clip !== greetingClip && clip !== reactionClip,
+            );
+            if (fallbackClip) playAnimation(mixer.clipAction(fallbackClip));
+          }
           robot.userData.mixer = mixer;
         }
       },
       undefined,
-      (error) => console.error("Could not load colored_model.glb.", error),
+      (error) => console.error("Could not load pika-assistant.gltf.", error),
     );
-
-    const pointer = new THREE.Vector2();
-    const position = new THREE.Vector2();
-    const clock = new THREE.Clock();
-    let active = false;
 
     window.addEventListener("pointermove", (event) => {
       if (event.pointerType === "touch") return;
       pointer.set(event.clientX, event.clientY);
-      if (!active) {
-        position.copy(pointer);
-        active = true;
-        canvas.classList.add("is-visible");
-      }
+      active = true;
     });
 
     window.addEventListener("pointerout", (event) => {
       if (event.relatedTarget) return;
       active = false;
-      canvas.classList.remove("is-visible");
     });
 
     function animate() {
@@ -104,7 +273,7 @@ if (finePointer.matches) {
 
         position.x += (left - position.x) * smooth;
         position.y += (top - position.y) * smooth;
-        canvas.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
+        assistant.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
 
         const robotCenterX = position.x + width / 2;
         const robotCenterY = position.y + height / 2;
@@ -119,8 +288,8 @@ if (finePointer.matches) {
           0.3,
         );
 
-        robot.rotation.y += (lookX - robot.rotation.y) * 0.1;
-        robot.rotation.x += (-lookY - robot.rotation.x) * 0.1;
+        robot.rotation.y += (lookX - robot.rotation.y) * 0.4;
+        robot.rotation.x += (-lookY - robot.rotation.x) * 0.4;
         if (!reducedMotion.matches) {
           robot.rotation.y += 0.002;
           robot.position.y = Math.sin(elapsed * 1.3) * 0.055;
@@ -128,6 +297,7 @@ if (finePointer.matches) {
       }
 
       if (robot.userData.mixer) robot.userData.mixer.update(delta);
+      updateCuteExpression(elapsed);
       renderer.render(scene, camera);
     }
 

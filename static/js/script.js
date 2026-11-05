@@ -309,6 +309,7 @@
     pl = $("#pl");
   var ITEMS = [
     ["Input", "#top"],
+    ["Developer", "#me"],
     ["Process", "#about"],
     ["Layers", "#stack"],
     ["Output / projects", "#work"],
