@@ -200,7 +200,28 @@
   }
 
   function bindCards() {
-    $$(".card").forEach(function (c, j) {
+    var cards = $$(".card");
+    if (
+      "IntersectionObserver" in window &&
+      !matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      var cardObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            cardObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -4% 0px" },
+      );
+      cards.forEach(function (card) {
+        card.classList.add("scroll-reveal");
+        cardObserver.observe(card);
+      });
+    }
+
+    cards.forEach(function (c, j) {
       c.style.setProperty("--d", j);
       c.addEventListener("pointermove", function (e) {
         var r = c.getBoundingClientRect();

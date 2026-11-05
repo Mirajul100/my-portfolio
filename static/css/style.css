@@ -753,11 +753,18 @@ footer {
   animation: up2 0.7s backwards;
   animation-delay: calc(var(--d, 0) * 150ms + 180ms);
 }
-.rv.in .card {
-  animation: project-left 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-  animation-delay: calc(var(--d, 0) * 180ms + 220ms);
+.card.scroll-reveal {
+  opacity: 0;
+  transform: translateX(-72px);
 }
-.rv.in .card:nth-child(even) {
+.card.scroll-reveal.is-visible {
+  animation: project-left 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--d, 0) * 180ms);
+}
+.card.scroll-reveal:nth-child(even) {
+  transform: translateX(72px);
+}
+.card.scroll-reveal:nth-child(even).is-visible {
   animation-name: project-right;
 }
 .rv.in .about p,
@@ -793,11 +800,19 @@ footer {
     opacity: 0;
     transform: translateX(-72px);
   }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 @keyframes project-right {
   from {
     opacity: 0;
     transform: translateX(72px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 @keyframes spin {
