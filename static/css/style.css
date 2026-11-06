@@ -228,6 +228,20 @@ h1 em {
   font-weight: 400;
   color: var(--ac);
 }
+.typing-cursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.78em;
+  margin-left: 0.08em;
+  vertical-align: -0.02em;
+  background: var(--ac);
+  animation: blink 0.8s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
 .lead {
   font-size: clamp(18px, 2.4vw, 24px);
   max-width: 640px;

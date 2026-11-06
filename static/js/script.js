@@ -16,19 +16,20 @@
     d.dataset.theme = dark ? "light" : "dark";
   });
 
-  /* ============ 2. HERO: LETTER REVEAL ============ */
-  var h1 = $("h1"),
-    n = 0;
-  var split = function (s) {
-    return s
-      .split("")
-      .map(function (c) {
-        return '<span class="ch" style="--i:' + n++ + '">' + c + "</span>";
-      })
-      .join("");
-  };
-  h1.setAttribute("aria-label", "Mirajul");
-  h1.innerHTML = split("Miraj") + "<em>" + split("ul") + "</em>";
+  /* ============ 2. HERO: NAME TYPING ============ */
+  var typedName = $("#typed-name"),
+    fullName = "Islam Anik";
+  var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    typedName.textContent = fullName;
+  } else {
+    typedName.textContent = "";
+    var nameIndex = 0;
+    (function typeName() {
+      typedName.textContent = fullName.slice(0, ++nameIndex);
+      if (nameIndex < fullName.length) setTimeout(typeName, 110);
+    })();
+  }
 
   /* ============ 3. HERO: TERMINAL ============ */
   var LINES = [

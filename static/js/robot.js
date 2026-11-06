@@ -8,13 +8,6 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (finePointer.matches) {
-  let firstVisit = true;
-  try {
-    firstVisit = window.localStorage.getItem("pika-assistant-greeted") !== "true";
-  } catch (error) {
-    console.warn("Could not save the Pika greeting preference.", error);
-  }
-
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -68,9 +61,11 @@ if (finePointer.matches) {
       window.clearTimeout(bubbleTimer);
       greeting.textContent = message;
       assistant.classList.add("is-greeting");
-      bubbleTimer = window.setTimeout(() => {
-        assistant.classList.remove("is-greeting");
-      }, duration);
+      if (duration > 0) {
+        bubbleTimer = window.setTimeout(() => {
+          assistant.classList.remove("is-greeting");
+        }, duration);
+      }
     }
 
     function playAnimation(action) {
@@ -133,7 +128,9 @@ if (finePointer.matches) {
       contact: "Have an idea? Send Mirajul a message!",
     };
     const sections = Array.from(document.querySelectorAll("main section[id]"));
+    const projects = document.querySelector("#projects");
     let scrollFrame = 0;
+    let activeProjectCard = null;
 
     function onSectionScroll() {
       if (scrollFrame) return;
@@ -146,16 +143,51 @@ if (finePointer.matches) {
         });
         if (!current || current.id === activeSection) return;
         activeSection = current.id;
+        if (activeProjectCard) return;
         react(sectionMessages[activeSection] || "A new section to explore! ✨");
       });
     }
 
     window.addEventListener("scroll", onSectionScroll, { passive: true });
 
+    projects.addEventListener("pointerover", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const card = event.target.closest(".card");
+      if (!card || activeProjectCard === card) return;
+
+      activeProjectCard = card;
+      const title = card.querySelector("h3").textContent.replace("↗", "").trim();
+      const description = card.querySelector("p").textContent.trim();
+      const feature =
+        description.length > 72
+          ? `${description.slice(0, 69).trimEnd()}…`
+          : description;
+      showMessage(`${title}: ${feature}`, 0);
+    });
+
+    projects.addEventListener("pointerout", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const card = event.target.closest(".card");
+      if (
+        !card ||
+        (event.relatedTarget instanceof Node && card.contains(event.relatedTarget)) ||
+        activeProjectCard !== card
+      ) {
+        return;
+      }
+
+      activeProjectCard = null;
+      assistant.classList.remove("is-greeting");
+      if (activeSection === "work") {
+        showMessage(sectionMessages.work, 1900);
+      }
+    });
+
     document.addEventListener("click", (event) => {
       if (!(event.target instanceof Element)) return;
       const control = event.target.closest("a, button, [data-h]");
       if (!control || control.matches(":disabled")) return;
+      if (control.closest(".card")) return;
       const href = control.getAttribute("href") || "";
       const target = control.getAttribute("data-h") || "";
       const sectionId = href.charAt(0) === "#" ? href.slice(1) : target.slice(1);
@@ -204,13 +236,7 @@ if (finePointer.matches) {
           mixer.addEventListener("finished", (event) => {
             if (event.action === greetingAction && currentAction === greetingAction) {
               playAnimation(idleAction);
-              showMessage("(｡•̀ᴗ-)✧", 1200);
               expressionStart = clock.elapsedTime;
-              try {
-                window.localStorage.setItem("pika-assistant-greeted", "true");
-              } catch (error) {
-                console.warn("Could not save the Pika greeting preference.", error);
-              }
             } else if (
               event.action === reactionAction &&
               currentAction === reactionAction
@@ -219,10 +245,13 @@ if (finePointer.matches) {
             }
           });
 
-          if (firstVisit && greetingAction && !reducedMotion.matches) {
+          showMessage(
+            "Hello! Welcome to Mirajul's portfolio. It's lovely to have you here please enjoy exploring!",
+            8000,
+          );
+          if (greetingAction && !reducedMotion.matches) {
             greetingAction.setLoop(THREE.LoopOnce, 1);
             greetingAction.clampWhenFinished = true;
-            showMessage("Hi there! 👋", 3200);
             playAnimation(greetingAction);
           } else if (idleAction && !reducedMotion.matches) {
             playAnimation(idleAction);
