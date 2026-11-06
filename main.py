@@ -45,6 +45,16 @@ PROJECTS = [
         "link": "https://github.com/Mirajul100/ecommerce-website",
         "image": "img/shopnex.png",
     },
+    {
+        "title": "Mango leaf disease detection",
+        "flow": ["Upload Image", "Detect Disease", "Get Results"],
+        "description": "A deep learning custom CNN model for detecting diseases in mango leaves.",
+        "stack": ["Python", "TensorFlow", "Custom CNN", "FirstApi" , "HTML" , "CSS" , "JavaScript" , "keras" , "NumPy" , "Pandas"],
+        "metric_label": "result",
+        "metric": "in development",
+        "link": "https://colab.research.google.com/drive/14kKNCUsT2o3nAMd0iuBhw2Fz0EEJjLZd",
+        "image": "img/mango_leaf_disease_detection.png",
+    },
 ]
 
 
