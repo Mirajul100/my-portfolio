@@ -53,7 +53,7 @@ PROJECTS = [
         "metric_label": "result",
         "metric": "in development",
         "link": "https://colab.research.google.com/drive/14kKNCUsT2o3nAMd0iuBhw2Fz0EEJjLZd",
-        "image": "img/mango_leaf_disease_detection.png",
+        "image": "img/leaf.png",
     },
 ]
 
