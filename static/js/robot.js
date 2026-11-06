@@ -326,7 +326,6 @@ function initializeRobot() {
           robot.position.y = Math.sin(elapsed * 1.3) * 0.055;
         }
       } else if (!finePointer.matches && !reducedMotion.matches) {
-        robot.rotation.y += 0.002;
         robot.position.y = Math.sin(elapsed * 1.3) * 0.055;
       }
 
