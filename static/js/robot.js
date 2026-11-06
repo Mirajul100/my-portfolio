@@ -7,7 +7,7 @@ const greeting = document.querySelector("#robot-greeting");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-if (finePointer.matches) {
+function initializeRobot() {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -38,8 +38,8 @@ if (finePointer.matches) {
 
     const pointer = new THREE.Vector2();
     const position = new THREE.Vector2(
-      Math.max(0, window.innerWidth - 214),
-      Math.max(0, window.innerHeight - 244),
+      finePointer.matches ? Math.max(0, window.innerWidth - 214) : 0,
+      finePointer.matches ? Math.max(0, window.innerHeight - 244) : 0,
     );
     const clock = new THREE.Clock();
     let active = false;
@@ -54,7 +54,9 @@ if (finePointer.matches) {
     let rightEyeExpression;
     let activeSection = "top";
 
-    assistant.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
+    if (finePointer.matches) {
+      assistant.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
+    }
     assistant.classList.add("is-visible");
 
     function showMessage(message, duration) {
@@ -269,13 +271,13 @@ if (finePointer.matches) {
     );
 
     window.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch") return;
+      if (!finePointer.matches || event.pointerType === "touch") return;
       pointer.set(event.clientX, event.clientY);
       active = true;
     });
 
     window.addEventListener("pointerout", (event) => {
-      if (event.relatedTarget) return;
+      if (!finePointer.matches || event.relatedTarget) return;
       active = false;
     });
 
@@ -323,6 +325,9 @@ if (finePointer.matches) {
           robot.rotation.y += 0.002;
           robot.position.y = Math.sin(elapsed * 1.3) * 0.055;
         }
+      } else if (!finePointer.matches && !reducedMotion.matches) {
+        robot.rotation.y += 0.002;
+        robot.position.y = Math.sin(elapsed * 1.3) * 0.055;
       }
 
       if (robot.userData.mixer) robot.userData.mixer.update(delta);
@@ -333,3 +338,5 @@ if (finePointer.matches) {
     animate();
   }
 }
+
+initializeRobot();

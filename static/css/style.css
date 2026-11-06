@@ -974,7 +974,16 @@ footer {
     display: none;
   }
   #pika-assistant {
-    display: none;
+    top: auto;
+    right: 4px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    left: auto;
+    width: 112px;
+    height: 130px;
+  }
+  #robot-canvas {
+    width: 112px;
+    height: 130px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
